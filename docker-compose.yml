@@ -1,0 +1,13 @@
+services:
+  mlops:
+    build: .
+    volumes:
+      - ./artifacts:/app/artifacts
+      - ./data:/app/data
+    command: >
+      sh -c "python scripts/run_feature_pipeline.py
+      --input data/sample/customers.csv
+      --output data/processed/features.csv
+      && python scripts/run_training_pipeline.py
+      --input data/processed/features.csv
+      --artifact-dir artifacts"
